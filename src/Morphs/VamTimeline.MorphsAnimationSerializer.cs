@@ -42,7 +42,7 @@ namespace VamTimeline
                 var morphName = morphJSON["Morph"].Value;
                 var morph = allMorphs.Single(fc => fc.name == morphName);
                 if (morph == null) throw new NullReferenceException($"Atom '{_atom.uid}' does not have a morph '{morphName}'");
-                var target = clip.Add(morph);
+                var target = clip.Add(null, morph);
                 DeserializeCurve(target.Value, morphJSON["Value"]);
             }
         }
@@ -55,7 +55,7 @@ namespace VamTimeline
             {
                 var morphJSON = new JSONClass
                     {
-                        { "Morph", morph.Storable.name },
+                        { "Morph", morph.FloatParam.name },
                         { "Value", SerializeCurve(morph.Value) },
                     };
                 morphsJSON.Add(morphJSON);
